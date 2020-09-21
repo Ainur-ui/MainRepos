@@ -18,17 +18,29 @@ namespace HoofHornService.Services
             var workers = new List<Worker>();
             foreach (var objectItem in jsonData.EnumerateArray())
             {
-                var field = objectItem.EnumerateObject().ToImmutableList().Find(x => x.Name == "positon");
-                switch (field.Value.ToString())
+                Worker worker = null;
+                var field = objectItem.EnumerateObject().ToImmutableList().Find(x => x.Name == "positon").Value.ToString();
+                switch (field)
                 {
                     case "manager":
-                        workers.Add(JsonConvert.DeserializeObject<Manager>(objectItem.ToString()));
+                        worker = JsonConvert.DeserializeObject<Manager>(objectItem.ToString());
+                        worker = new WorkerWithoutCategory(worker);
+                        workers.Add(worker);
                         break;
                     case "technician":
-                        workers.Add(JsonConvert.DeserializeObject<Technician>(objectItem.ToString()));
-                        break;
                     case "driver":
-                        workers.Add(JsonConvert.DeserializeObject<Driver>(objectItem.ToString()));
+                        var category = objectItem.EnumerateObject().ToImmutableList().Find(x => x.Name == "category").Value.ToString();
+                        if (field == "technician")
+                        {
+                            worker = JsonConvert.DeserializeObject<Technician>(objectItem.ToString());
+                        }
+                        else
+                        {
+                            worker = JsonConvert.DeserializeObject<Driver>(objectItem.ToString());
+                        }
+
+                        worker = new WorkerWithCategory(worker, category);
+                        workers.Add(worker);
                         break;
                 }
             }

@@ -8,7 +8,7 @@
         /// <inheritdoc/>
         public override double GetSalary()
         {
-            return base.GetSalary() + Bonus;
+            return Salary;
         }
     }
 }

@@ -28,10 +28,7 @@ namespace HoofHornService.Contracts
         /// <summary>
         /// Получить зарплату за месяц.
         /// </summary>
-        /// <returns>Полная зарплата.</returns>
-        public virtual double GetSalary()
-        {
-            return this.Salary;
-        }
+        /// <returns>зарплата.</returns>
+        public abstract double GetSalary();
     }
 }

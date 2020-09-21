@@ -5,14 +5,13 @@ using System.Collections.Generic;
 namespace HoofHornService.Contracts
 {
     /// <summary>
-    /// Абстрактный класс описывающий работника с категорией.
+    /// класс описывающий работника с категорией.
     /// </summary>
-    public abstract class WorkerWithCategory : Worker
+    public class WorkerWithCategory : Decorator
     {
         /// <summary>
         /// Категория (A - 125%, B - 115%, С - 100%).
         /// </summary>
-        [JsonProperty("category")]
         public string Category { get; protected set; }
 
         /// <summary>
@@ -20,12 +19,18 @@ namespace HoofHornService.Contracts
         /// </summary>
         private readonly Dictionary<string, double> CategoryValues = new Dictionary<string, double>() { { "A", 1.25 }, { "B", 1.15 }, { "C", 1 } };
 
+        public WorkerWithCategory(Worker worker, string category)
+            : base(worker)
+        {
+            Category = category;
+        }
+
         /// <inheritdoc/>
         public override double GetSalary()
         {
             if (CategoryValues.ContainsKey(Category))
             {
-                return base.GetSalary() * CategoryValues[Category];
+                return base.GetSalary() * CategoryValues[Category] + worker.Bonus;
             }
             else
             {

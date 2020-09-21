@@ -5,12 +5,12 @@ namespace HoofHornService.Contracts
     /// <summary>
     /// Класс описывающий техника.
     /// </summary>
-    internal class Technician : WorkerWithCategory
+    internal class Technician : Worker
     {
         /// <inheritdoc/>
         public override double GetSalary()
         {
-            return base.GetSalary() + Bonus;
+            return Salary;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace HoofHornService.Contracts
     /// <summary>
     /// Класс описывающий водителя.
     /// </summary>
-    internal class Driver : WorkerWithCategory
+    internal class Driver : Worker
     {
         /// <summary>
         /// Количество отработанных часов.
@@ -17,7 +17,7 @@ namespace HoofHornService.Contracts
         /// <inheritdoc/>
         public override double GetSalary()
         {
-            return base.GetSalary() * TimeWorked + Bonus;
+            return Salary * TimeWorked;
         }
     }
 }
